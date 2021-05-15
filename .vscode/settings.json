@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "Myvenv\\Scripts\\python.exe",
+    // "python.terminal.activateEnvInCurrentTerminal": true,
+}
