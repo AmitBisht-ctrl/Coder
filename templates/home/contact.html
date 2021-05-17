@@ -5,9 +5,10 @@
 {% block title %}Contact{% endblock title %} 
 
 
+{% block Contacts %}active{% endblock Contacts %}
+
 
 {% block css %} 
-
 {% load static %}
 
 <link rel="stylesheet" href='{% static "home/style.css" %}' />
@@ -18,7 +19,7 @@
 
 {% block body %}
 
-<div class="container my-5">
+<div class="container my-3">
   <form action="/contact/" method="POST">
     {% csrf_token %}
     <div class="mb-3">
