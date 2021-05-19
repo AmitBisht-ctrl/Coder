@@ -2,7 +2,19 @@
 
 {% block title %}BlogPost{% endblock title %}
 
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'home/style.css' %}">
+{% endblock css %}
+
 {% block body %}
-this is blog post
+<div class="container">
+<article class="blog-post">
+        <h2 class="blog-post-title">{{post.title}}</h2>
+        <p class="blog-post-meta">{{post.timestamp}}&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">By: {{post.author}}</a></p>
+
+        <p>{{post.content}}</p>
+      </article>
+</div>
 
 {% endblock body %}

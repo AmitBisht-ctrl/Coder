@@ -1,4 +1,5 @@
 {
-    "python.pythonPath": "Myvenv\\Scripts\\python.exe",
+    "python.pythonPath": "Env\\Scripts\\python.exe",
+    "git.ignoreLimitWarning": true,
     // "python.terminal.activateEnvInCurrentTerminal": true,
 }

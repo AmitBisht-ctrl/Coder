@@ -21,13 +21,15 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">LoveCode</a>
+      <div class="col-1 ms-5 ps-5">
+        <a class="navbar-brand" href="/">LoveCode</a>
+      </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <div class="collapse navbar-collapse col-12" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-5 ps-2 mb-2 mb-lg-0 col-6">
           <li class="nav-item">
             <a class="nav-link {% block Home %}{% endblock %}" aria-current="page" href="/">Home</a>
           </li>
@@ -40,13 +42,27 @@
           <li class="nav-item">
             <a class="nav-link {% block Contacts %}{% endblock %}" href="/contact">Contact</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/" target="_blank">Admin</a>
+          </li>
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-          <button class="btn btn-outline-success" type="submit">
-            Search
+        <div class="col-3">
+          <form class="d-flex p-0" method="GET" action="/search">
+            <input class="form-control me-2" type="search" placeholder="Search" name="query" id='query' />
+            <button class="btn btn-outline-success me-3" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+        <!-- Button to trigger SignU modal -->
+        <div class="col-1 d-flex">
+          <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#signupModal">
+            LogIn
           </button>
-        </form>
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#logInModal">
+            SignUp
+          </button>
+        </div>
       </div>
     </div>
   </nav>
@@ -54,12 +70,104 @@
   <!-- Navbar Ends here -->
 
   {% for message in messages %}
-    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-        <strong>Message:</strong> {{message}}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+  <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+    <strong>Message:</strong> {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
   {% endfor %}
 
+
+
+
+  <!--SignUp  Modal -->
+  <div class="modal fade shadow-lg" id="signupModal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="signupModal" style="margin-left:30%">LoveCode? Sign-Up</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form>
+            <div class="mb-3">
+              <label for="Username" class="form-label">Username</label><br>
+              <input type="text" class="form-control" placeholder="User Name" aria-label="Username" name="Username"
+                id="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="mb-3">
+              <label for="fname" class="form-label">First Name</label><br>
+              <input type="text" class="form-control" placeholder="First Name" aria-label="fname" name="fname"
+                id="fname" aria-describedby="basic-addon1">
+            </div>
+            <div class="mb-3">
+              <label for="lname" class="form-label">Last Name</label><br>
+              <input type="text" class="form-control" placeholder="Last Name" aria-label="lname" name="lname" id="lname"
+                aria-describedby="basic-addon1">
+            </div>
+            <div class="my-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+                placeholder="name@gmail.com">
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+              <label for="password1" class="form-label">Password</label>
+              <input type="password" class="form-control mb-3" id="password1"
+                placeholder="Your password here">
+              <label for="password2" class="form-label">Confirm your password</label>
+              <input type="password" class="form-control mb-4" id="password2"
+                placeholder="Re-Enter you Password to Confirm">
+            </div>
+            <button type="submit" class="btn btn-primary mb-4">Submit</button>
+          </form>
+
+        </div>
+        {% comment %} <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div> {% endcomment %}
+      </div>
+    </div>
+  </div>
+  <!-- Sign Up Model ends here -->
+
+  <!--LogIn  Modal -->
+  <div class="modal fade shadow-lg" id="logInModal" tabindex="-1" aria-labelledby="LogInModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="logInModal" style="margin-left:30%">LoveCode? Log In</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form>
+
+            <div class="mb-3">
+              <div class="my-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+                  placeholder="name@gmail.com">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control mb-3" id="password" name="password"
+                  placeholder="Your password here">
+              </div>
+              <button type="submit" class="btn btn-primary mb-4">Submit</button>
+          </form>
+
+        </div>
+        {% comment %} <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div> {% endcomment %}
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Log In Moda Ends Here -->
 
 
   {% block body %} {% endblock body %}
