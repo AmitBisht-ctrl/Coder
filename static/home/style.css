@@ -21,3 +21,7 @@
 form {
   padding: 0% 7% 1%;
 }
+
+textarea{
+  resize: none;
+}

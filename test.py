@@ -46,18 +46,22 @@
 # if nu:
 #     print('h')
 
-num = int(input('Give the number of characters to be included in the array')) 
-arr = []
+# num = int(input('Give the number of characters to be included in the array')) 
+# arr = []
 
-for i in range(num):
-    val = int(input('Give the value to be stored in array'))
-    arr.append(val)
+# for i in range(num):
+#     val = int(input('Give the value to be stored in array'))
+#     arr.append(val)
 
-startval = int(input('Give the start value for the number to be searched in array')) 
-endval = int(input('Give the end value for the number to be searched in array')) 
+# startval = int(input('Give the start value for the number to be searched in array')) 
+# endval = int(input('Give the end value for the number to be searched in array')) 
 
-for i in range(startval,endval+1):
-    if i not in arr:
-        print(i)
+# for i in range(startval,endval+1):
+#     if i not in arr:
+#         print(i)
 
-print('Array:',arr)
+# print('Array:',arr)
+
+s = '1123a'
+
+print(s.title())

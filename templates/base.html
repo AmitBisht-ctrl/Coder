@@ -46,6 +46,7 @@
             <a class="nav-link" href="/admin/" target="_blank">Admin</a>
           </li>
         </ul>
+        <!--search button -->
         <div class="col-3">
           <form class="d-flex p-0" method="GET" action="/search">
             <input class="form-control me-2" type="search" placeholder="Search" name="query" id='query' />
@@ -54,14 +55,35 @@
             </button>
           </form>
         </div>
-        <!-- Button to trigger SignU modal -->
+
+        {% if user.is_authenticated %}
+
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Welcome {{request.user}}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <form action="/logout/" method="post">
+              {% csrf_token %}
+              <li><button type="submit" class='dropdown-item'>Logout</button></li>
+            </form>
+          </ul>
+        </div>
+
+        {% else %}
+
+
+        <!-- Button to trigger SignUp/login modal -->
         <div class="col-1 d-flex">
-          <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#signupModal">
+          <button type="button" class="btn btn-success mx-2 my-1" data-bs-toggle="modal" data-bs-target="#logInModal">
             LogIn
           </button>
-          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#logInModal">
+          <button type="button" class="btn btn-success my-1" data-bs-toggle="modal" data-bs-target="#signupModal">
             SignUp
           </button>
+
+          {% endif %}
         </div>
       </div>
     </div>
@@ -71,7 +93,13 @@
 
   {% for message in messages %}
   <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-    <strong>Message:</strong> {{message}}
+    <strong>{% if message.level == 40 %}
+      Error:
+      {% elif message.level == 30 %}
+      Warning:
+      {% elif message.level == 25 %}
+      Success:
+      {% endif %}</strong> {{message}}{{message.level_constant}}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
   {% endfor %}
@@ -89,16 +117,17 @@
         </div>
         <div class="modal-body">
 
-          <form>
+          <form action="/signup/" method="post">
+            {% csrf_token %}
             <div class="mb-3">
               <label for="Username" class="form-label">Username</label><br>
               <input type="text" class="form-control" placeholder="User Name" aria-label="Username" name="Username"
-                id="Username" aria-describedby="basic-addon1">
+                id="Username" aria-describedby="basic-addon1" Required>
             </div>
             <div class="mb-3">
               <label for="fname" class="form-label">First Name</label><br>
               <input type="text" class="form-control" placeholder="First Name" aria-label="fname" name="fname"
-                id="fname" aria-describedby="basic-addon1">
+                id="fname" aria-describedby="basic-addon1" Required>
             </div>
             <div class="mb-3">
               <label for="lname" class="form-label">Last Name</label><br>
@@ -108,24 +137,21 @@
             <div class="my-3">
               <label for="email" class="form-label">Email address</label>
               <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
-                placeholder="name@gmail.com">
+                placeholder="name@gmail.com" Required>
               <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div class="mb-3">
               <label for="password1" class="form-label">Password</label>
-              <input type="password" class="form-control mb-3" id="password1"
-                placeholder="Your password here">
+              <input type="password" class="form-control mb-3" id="password1" name="password1"
+                placeholder="Your password here" Required>
               <label for="password2" class="form-label">Confirm your password</label>
-              <input type="password" class="form-control mb-4" id="password2"
-                placeholder="Re-Enter you Password to Confirm">
+              <input type="password" class="form-control mb-4" id="password2" name="password2"
+                placeholder="Re-Enter you Password to Confirm" Required>
             </div>
             <button type="submit" class="btn btn-primary mb-4">Submit</button>
           </form>
 
         </div>
-        {% comment %} <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div> {% endcomment %}
       </div>
     </div>
   </div>
@@ -141,27 +167,22 @@
         </div>
         <div class="modal-body">
 
-          <form>
-
+          <form action="/login/" method="post">
+            {% csrf_token %}
             <div class="mb-3">
-              <div class="my-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
-                  placeholder="name@gmail.com">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control mb-3" id="password" name="password"
-                  placeholder="Your password here">
-              </div>
-              <button type="submit" class="btn btn-primary mb-4">Submit</button>
+              <label for="Username" class="form-label">Username</label><br>
+              <input type="text" class="form-control" placeholder="User Name" aria-label="Username" name="Username"
+                id="Username" aria-describedby="basic-addon1" Required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control mb-3" id="password" name="password"
+                placeholder="Your password here" Required>
+            </div>
+            <button type="submit" class="btn btn-primary mb-4">Submit</button>
           </form>
 
         </div>
-        {% comment %} <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div> {% endcomment %}
       </div>
     </div>
   </div>
