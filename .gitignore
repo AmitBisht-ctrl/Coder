@@ -1,3 +1,4 @@
 .vscode
 tr.html
 */__pycache__/*
+*/migrations/__pycache__/*
