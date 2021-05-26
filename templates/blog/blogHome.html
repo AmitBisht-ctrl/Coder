@@ -12,6 +12,7 @@
 
 
 {% block body %}
+{% load bleach_tags %}
 <div class="container p-0 mt-5">
   <h2 class="text-center mt-4">Coding Articles By Coders</h2>
   <hr class="mb-5 mx-auto w-50">
@@ -21,7 +22,7 @@
       <strong class="d-inline-block mb-2 text-primary">{{post.author}}</strong>
       <h3 class="mb-0"><a href="{{post.slug}}" class="text-dark">{{post.title}}</a></h3>
       <div class="mb-1 text-muted">{{Post.timestamp}}</div>
-      <p class="card-text mb-auto">{{post.content|truncatechars:200}}</p>
+      <div class="card-text mb-auto preview mt-1">{{post.content|bleach:"h1,h2,h3,h4,h5,h6,p,br,span"|truncatechars:200}}</div>
       <div>
         <a href="{{post.slug}}" role="button" class="btn btn-primary my-3">Continue reading</a>
       </div>
@@ -31,3 +32,14 @@
 </div>
 
 {% endblock body %}
+
+{% block js %}
+
+{% comment %} // to convert the preview content of the blog post to usual text ignoring html tags
+//let previews = document.getElementsByClassName('preview')
+// array.from will convert previews into an array
+// Array.from(previews).forEach(element) =>{
+//  element.innerHTMl = element.innerText;
+} {% endcomment %}
+
+{% endblock js %}

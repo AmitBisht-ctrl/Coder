@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load humanize %}
 {% load extras %}
+{% load bleach_tags %}
 
 {% block title %}BlogPost{% endblock title %}
 
@@ -15,7 +16,7 @@
     <h2 class="blog-post-title">{{post.title}}</h2>
     <p class="blog-post-meta">{{post.timestamp}}&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">By: {{post.author}}</a></p>
 
-    <p>{{post.content}}</p>
+    <p>{{post.content|bleach:"h1,h2,h3,h4,h5,h6,p,br,span"}}</p>
   </article>
 </div>
 <div class="container">
@@ -58,50 +59,71 @@
 
       <p class="mb-2"><b>{{comment.user|title}}</b> <span class="badge bg-secondary">
           {{comment.timestamp|naturaltime}}</span></p>
-      <div class="" <p class="mb-5"><span>{{comment.comment}}</span></p>
-        <div class="reply mx-5"></div>
+      <p class="need-border"><div class="comment-wrap">{{comment.comment}}</div></p>
 
-        <p>
-          <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse"
-            data-bs-target="#replybox{{comment.sno}}" aria-expanded="false" aria-controls="replybox{{comment.sno}}">
-            Reply
-          </button>
-        </p>
-        <div class="collapse" id="replybox{{comment.sno}}">
-          <div class="card card-body mb-5">
-            <form action="/blog/postComment/" method="post" class="row">
-              {% csrf_token %}
-              <input type="hidden" name="parentSno" value="{{comment.sno}}">
-              <input type="hidden" name="postId" value="{{post.id}}">
-              <div class="row ps-0">
-                <div class="col-10">
+      <p>
+        <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse"
+          data-bs-target="#replybox{{comment.sno}}" aria-expanded="false" aria-controls="replybox{{comment.sno}}">
+          Reply
+        </button>
+        <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse"
+          data-bs-target="#Replies{{comment.sno}}" aria-expanded="false" aria-controls="Replies">See Replies</button>
+      </p>
 
-                  <textarea name="comment" cols="30" rows="1" style="resize:none" placeholder="Enter your Comment here"
-                    class="form-control my-3 me-4 border-top-0 border-end-0 border-start-0 border-primary"></textarea>
+      <!--Multi-Collpse in replies -->
+      <div class="row">
+        <div class="col">
+          <div class="collapse multi-collapse" id="replybox{{comment.sno}}">
+            <div class="card card-body">
 
+              <form action="/blog/postComment/" method="post" class="row">
+                {% csrf_token %}
+                <input type="hidden" name="parentSno" value="{{comment.sno}}">
+                <input type="hidden" name="postId" value="{{post.id}}">
+                <div class="row ps-0">
+                  <div class="col-10">
+                    <textarea name="comment" cols="30" rows="1" style="resize:none"
+                      placeholder="Enter your Comment here"
+                      class="form-control my-0 me-4 border-top-0 border-end-0 border-start-0 border-primary"></textarea>
+                  </div>
+                  <div class="col-2">
+                    <input type="submit" class="btn btn-primary btn-sm mt-2 float-start" value="Add Reply">
+                  </div>
                 </div>
-                <div class="col-2">
+              </form>
+            </div>
+          </div>
 
-                  <input type="submit" class="btn btn-primary btn-sm mt-2 float-start" value="Add Reply">
 
+          <div class="collapse multi-collapse" id="Replies{{comment.sno}}">
+            <div class="card card-body">
+
+              {% for reply in repDict|get_val:comment.sno %}
+              <div class="row">
+                <div class="col-1">
+                  <img src="{% static 'user.png' %}" class="rounded mx-auto d-block w-75 my-2" alt="user">
                 </div>
-                <div class="replies bg-danger">
-                  {% for reply in repDict|get_val:comment.sno %}
-                    {{reply}}
-                    <br>
-                  {% endfor %}
+                <div class="col-11">
+                  <p><b>{{reply.user|title}}</b> <span class="badge bg-secondary">
+                      {{reply.timestamp|naturaltime}}</span></p>
+                  <p class="need-border"><div class="comment-wrap me-4">{{reply.comment}}</div></p>
+                  <br>
                 </div>
               </div>
-
-          </form>
+              {% empty %}
+              <b>No replies.</b>
+              {% endfor %}
+            </div>
+          </div>
         </div>
       </div>
+      <!-- multi-collapse ends here -->
+
+
 
     </div>
   </div>
-</div>
 
-{% endfor %}
+  {% endfor %}
 
-
-{% endblock body %}
+  {% endblock body %}

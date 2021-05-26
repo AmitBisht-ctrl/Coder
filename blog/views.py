@@ -24,7 +24,6 @@ def blogPost(request,slug):
             repDict[reply.parent.sno].append(reply)
 
     print('final reply: ',repDict,'\nReplies: ',replies,'\nparent comment: ',comments)
-
     context = {'post': post,'comments': comments, 'repDict':repDict}
     return render(request,'blog/blogPost.html',context)
 
