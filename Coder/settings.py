@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'django.contrib.humanize',
     'django_bleach',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -125,7 +127,23 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
+# used static root for installing collectstatic only
+# STATIC_ROOT = BASE_DIR/"static"
 
 MESSAGE_TAGS = {
     messages.ERROR : 'danger'
+}
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/'
+CKEDITOR_UPLOAD_PATH = '/media/'
+
+CKEDITOR_CONFIGS = {
+    'default':{
+        'toolbar': 'full',
+        # 'height':400,
+        # 'width':'120%',
+    }
 }

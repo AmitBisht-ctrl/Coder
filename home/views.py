@@ -6,6 +6,7 @@ from django.contrib import messages
 from blog.models import Post
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from home.forms import PostForm
 
 # Create your views here.
 def home(request):
@@ -110,3 +111,8 @@ def handlelogout(request):
         logout(request)
         messages.success(request,'Successfully Logged Out')
     return redirect('home')
+
+
+def cked(request):
+    form = PostForm()
+    return render(request,'home/trial.html',{'form':form})
