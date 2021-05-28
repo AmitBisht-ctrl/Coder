@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'home/style.css' %}">
+{% endblock css %}
+
+{% block postblog %}active{% endblock postblog %}
+
+{% block body %}
+{% load widget_tweaks %}
+<html>
+
+<body>
+
+    <div class="container ckdiv">
+        <form action="/postblog/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.media}}
+            <div class="row">
+                <div class="mb-4 col-md-6">
+                    <label for="title" class="form-label">Title</label>
+                    {% render_field form.title class="form-control" placeholder="Give a title to the Blog" %}
+                </div>
+                <div class="mb-4 col-md-6">
+                    <label for="author" class="form-label">Author</label>
+                    {% render_field form.author class="form-control" placeholder="Enter the authors name here" %}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Write your content here Content</label>
+                {% render_field form.content class="ck-width" placeholder="Write your blog here..." %}
+            </div>
+
+            {% if user.is_authenticated %}
+
+            <button type="submit" class="btn btn-primary">Post your Blog</button>
+        </form>
+
+        {% else %}
+        <div class="col-1 d-flex">
+            <button type="button" class="btn btn-success mx-2 my-1" data-bs-toggle="modal" data-bs-target="#logInModal">
+                LogIn
+            </button>
+            <button type="button" class="btn btn-success my-1" data-bs-toggle="modal" data-bs-target="#signupModal">
+                SignUp
+            </button> {% endif %}
+        </div>
+
+</body>
+
+</html>
+
+{% endblock body %}

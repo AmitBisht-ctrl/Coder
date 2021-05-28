@@ -35,3 +35,12 @@ textarea{
 .preview h3{
   font-size: medium;
 }
+
+.ckdiv{
+  width: 90%;
+}
+
+
+.container .django-ckeditor-widget{
+  width: 100%;
+}

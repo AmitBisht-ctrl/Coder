@@ -113,6 +113,20 @@ def handlelogout(request):
     return redirect('home')
 
 
-def cked(request):
+def postblog(request):
+    if request.method == "POST":
+        title = request.POST.get('title','')
+        author = request.POST.get('author','')
+        content = request.POST.get('content','')
+
+        print('title: ',title, '\nauthor:',author, '\ncontetn:',content)
+
+        postBlog = Post(title=title, author=author, content=content)
+        postBlog.save()
+        print(postBlog.save())
+        messages.success(request,"Successfully Posted Your Blog")
+
+        return redirect('/postblog/')
+    
     form = PostForm()
-    return render(request,'home/trial.html',{'form':form})
+    return render(request,'home/postYourBlog.html',{'form':form})

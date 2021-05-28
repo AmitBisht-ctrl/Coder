@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render, HttpResponse
 from blog.models import BlogComment, Post
 from django.contrib import messages
 from blog.templatetags import extras
+import bleach
 
 # from django.http import HttpResponse
 
@@ -23,8 +24,20 @@ def blogPost(request,slug):
         else:
             repDict[reply.parent.sno].append(reply)
 
-    print('final reply: ',repDict,'\nReplies: ',replies,'\nparent comment: ',comments)
-    context = {'post': post,'comments': comments, 'repDict':repDict}
+    attrs = {
+        '*': ['class'],
+        'a': ['href', 'rel'],
+        'img': ['alt','src'],
+    }
+
+    newContent = bleach.clean(
+        post.content,
+        tags=['p','h1','h2','h3','h4','h5','h6','br','span','strong','style','img','script'],
+        attributes=attrs,
+        styles=['color'],
+    )
+
+    context = {'post': post,'comments': comments, 'repDict':repDict,'content':newContent}
     return render(request,'blog/blogPost.html',context)
 
 def postComment(request):

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_bleach',
     'ckeditor',
     'ckeditor_uploader',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -143,7 +144,7 @@ CKEDITOR_UPLOAD_PATH = '/media/'
 CKEDITOR_CONFIGS = {
     'default':{
         'toolbar': 'full',
-        # 'height':400,
-        # 'width':'120%',
+        'height':400,
+        'width':'100%',
     }
 }

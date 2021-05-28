@@ -16,7 +16,7 @@
     <h2 class="blog-post-title">{{post.title}}</h2>
     <p class="blog-post-meta">{{post.timestamp}}&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">By: {{post.author}}</a></p>
 
-    <p>{{post.content|bleach:"h1,h2,h3,h4,h5,h6,p,br,span"}}</p>
+    <p>{{content|safe}}</p>
   </article>
 </div>
 <div class="container">
