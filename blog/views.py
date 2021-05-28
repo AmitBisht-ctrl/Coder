@@ -32,7 +32,7 @@ def blogPost(request,slug):
 
     newContent = bleach.clean(
         post.content,
-        tags=['p','h1','h2','h3','h4','h5','h6','br','span','strong','style','img','script'],
+        tags=['p','h1','h2','h3','h4','h5','h6','br','span','strong','style','img'],
         attributes=attrs,
         styles=['color'],
     )
